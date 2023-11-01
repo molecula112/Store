@@ -5,7 +5,13 @@
     <title>Dota</title>
 </head>
 <body>
-<h4>Skins<></h4>
+<h1>Skins<></h1>
+<h4>Поиск</h4>
+<form action="/products/search" method="get">
+По названию: <input type="text" name="title"><br>
+    <input type="submit" value="Найти"/>
+</form>
+<hr>
 <#list products as product>
     <div>
         <p>${product.title}</p>
@@ -13,6 +19,7 @@
         <a href="/products/product/${product.id}">Подробнее...</a>
     </div>
 </#list>
+<hr>
 <h3>Создать новый продукт</h3>
 <form action="/products/create" method="post">
     Название: <input type="text" name="title"/><br></br>

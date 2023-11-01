@@ -1,43 +1,35 @@
 package com.ybondarenko.store.service;
 
 import com.ybondarenko.store.entity.Product;
+import com.ybondarenko.store.repo.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    List<Product> productList = new ArrayList<>();
-    private long ID = 0;
-
-    {
-        productList.add(new Product(ID++, "PS4", "desc", 100000, "MSK", "Lol"));
-        productList.add(new Product(ID++, "Lenovo", "desc", 3000, "MSK", "Lol2"));
-    }
+    private final ProductRepository repository;
 
     public List<Product> getProductList() {
-        return productList;
+        return repository.findAll();
+    }
+
+    public List<Product> getProductByTitle(String title) {
+        return repository.findByTitle(title);
     }
 
     public Product getProductByID(long id) {
-        for(Product product : productList) {
-            if(product.getId().equals(id)) {
-                return product;
-            }
-        }
-        return null;
+        return repository.findById(id).orElse(null);
     }
 
     public void saveProduct(Product product) {
-        product.setId(ID++);
-        productList.add(product);
+        repository.save(product);
     }
 
     public void deleteProduct(long id) {
-        productList.removeIf(p -> p.getId().equals(id));
+        repository.deleteById(id);
     }
-
-
 }

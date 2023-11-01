@@ -20,6 +20,12 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/search")
+    public String getProductByTitle(@RequestParam(name = "title", required = false) String title, Model model) {
+        model.addAttribute("products", productService.getProductByTitle(title));
+        return "searchResult";
+    }
+
     @GetMapping("/product/{id}")
     public String getProductInfoByID(@PathVariable Long id, Model model) {
         model.addAttribute("product", productService.getProductByID(id));
